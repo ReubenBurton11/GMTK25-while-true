@@ -7,6 +7,8 @@ public class Draggable : MonoBehaviour
     private Vector2 dragOffset;
     private Vector2 size;
 
+    [SerializeField] private float clickMargin = 0.0f;
+
     private void Start()
     {
         size = GetComponent<RectTransform>().sizeDelta;
@@ -32,8 +34,8 @@ public class Draggable : MonoBehaviour
     {
         bool value = false;
         Vector2 position = gameObject.transform.position;
-        if (pos.x < position.x + size.x && pos.x > position.x &&
-            pos.y < position.y && pos.y > position.y - size.y)
+        if (pos.x < position.x + (size.x / 2) + clickMargin && pos.x > position.x - (size.x / 2) - clickMargin &&
+            pos.y < position.y + (size.y / 2) + clickMargin && pos.y > position.y - (size.y / 2) - clickMargin)
         {
             value = true;
         }
