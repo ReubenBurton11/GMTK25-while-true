@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe606bdedb4c7040900b32a470c40ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scale: 0.5
+  textInChild: 1
 --- !u!1 &1770280326345081306
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +133,7 @@ GameObject:
   - component: {fileID: 4488750379784347442}
   - component: {fileID: 8819875141800789890}
   m_Layer: 0
-  m_Name: Piss();
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
