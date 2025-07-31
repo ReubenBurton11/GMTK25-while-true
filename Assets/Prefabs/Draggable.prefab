@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickMargin: 10
+  returnSpeed: 2
 --- !u!114 &4961902467870312766
 MonoBehaviour:
   m_ObjectHideFlags: 0
