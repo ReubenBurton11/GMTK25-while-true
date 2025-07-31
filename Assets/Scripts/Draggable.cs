@@ -35,12 +35,15 @@ public class Draggable : MonoBehaviour
 
     public void Hold()
     {
+        Player.instance.SetIsHolding(true);
+        Player.instance.SetHeldObject(this);
         bHeld = true;
         dragOffset = (Vector2)gameObject.transform.position - GetMousePosition();
     }
 
     void Drop()
     {
+        Player.instance.SetIsHolding(false);
         bHeld = false;
         SetEndPosition(gameObject.transform.position);
         returnTime = 0.0f;
@@ -51,7 +54,7 @@ public class Draggable : MonoBehaviour
         return Mouse.current.position.ReadValue();
     }
 
-    bool inBoundingBox(Vector2 pos)
+    bool InBoundingBox(Vector2 pos)
     {
         bool value = false;
         Vector2 position = gameObject.transform.position;
@@ -68,7 +71,7 @@ public class Draggable : MonoBehaviour
     {
         if (!bHeld)
         {
-            if (Mouse.current.leftButton.wasPressedThisFrame && inBoundingBox(GetMousePosition()))
+            if (Mouse.current.leftButton.wasPressedThisFrame && InBoundingBox(GetMousePosition()))
             {
                 Hold();
             }
@@ -90,5 +93,11 @@ public class Draggable : MonoBehaviour
             gameObject.transform.position = Vector2.Lerp(endPosition, startPosition, returnTime);
             returnTime += Time.deltaTime * progress * returnSpeed;
         }
+    }
+
+    public void OnDestroy()
+    {
+        Player.instance.SetIsHolding(false);
+        bHeld = false;
     }
 }
