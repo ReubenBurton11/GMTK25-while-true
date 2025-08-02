@@ -7,7 +7,7 @@ public class RectResizer : MonoBehaviour
     private RectTransform rect;
     private RectTransform childRect;
 
-    [SerializeField] private float scale;
+    [SerializeField] private float marginSize;
     [SerializeField] private bool textInChild = false;
 
     private void Update()
@@ -40,8 +40,8 @@ public class RectResizer : MonoBehaviour
 
     void ResizeRect()
     {
-        int noChars = text.text.Length;
-        float size = noChars * text.fontSize * scale;
+        float margin = text.alignment == TextAlignmentOptions.Center ? marginSize : marginSize / 2;
+        float size = text.preferredWidth + margin;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
         if (textInChild)
         {

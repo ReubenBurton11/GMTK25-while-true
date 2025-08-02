@@ -10,7 +10,7 @@ public class Placer : MonoBehaviour
 
     private string textValue;
 
-    public bool bPlaced = false;
+    [HideInInspector] public bool bPlaced = false;
 
     private void Start()
     {
