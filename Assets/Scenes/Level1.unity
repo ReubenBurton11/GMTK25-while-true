@@ -427,6 +427,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3383706765368718444, guid: a67c8b76e0b826c498727fd6cd37e67e, type: 3}
   m_PrefabInstance: {fileID: 565531260}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &730735550 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6374597411628508242, guid: a67c8b76e0b826c498727fd6cd37e67e, type: 3}
+  m_PrefabInstance: {fileID: 565531260}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0db5edcbebc100429d7eea74ec5797f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &740116307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,6 +1566,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 519478817109121352, guid: b2627ef0a45e7304db3481604db4e6b2, type: 3}
   m_PrefabInstance: {fileID: 5840184956071419866}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2105992111 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6700835516705636795, guid: b2627ef0a45e7304db3481604db4e6b2, type: 3}
+  m_PrefabInstance: {fileID: 5840184956071419866}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683088fefd846bb47b776e24730361e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2133122439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,6 +1703,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4644942656554719892, guid: af9563b217ab70c47a7430aca009d7af, type: 3}
+      propertyPath: dropAreas.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644942656554719892, guid: af9563b217ab70c47a7430aca009d7af, type: 3}
+      propertyPath: draggables.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644942656554719892, guid: af9563b217ab70c47a7430aca009d7af, type: 3}
+      propertyPath: 'dropAreas.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2105992111}
+    - target: {fileID: 4644942656554719892, guid: af9563b217ab70c47a7430aca009d7af, type: 3}
+      propertyPath: 'draggables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 730735550}
     - target: {fileID: 8450840631791596546, guid: af9563b217ab70c47a7430aca009d7af, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1700,7 +1738,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 519478817109121352, guid: b2627ef0a45e7304db3481604db4e6b2, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 519478817109121352, guid: b2627ef0a45e7304db3481604db4e6b2, type: 3}
       propertyPath: m_Pivot.y
@@ -1760,7 +1798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 519478817109121352, guid: b2627ef0a45e7304db3481604db4e6b2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -204
       objectReference: {fileID: 0}
     - target: {fileID: 519478817109121352, guid: b2627ef0a45e7304db3481604db4e6b2, type: 3}
       propertyPath: m_AnchoredPosition.y

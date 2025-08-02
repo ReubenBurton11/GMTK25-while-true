@@ -3,10 +3,12 @@ using UnityEngine.InputSystem;
 
 public class Draggable : MonoBehaviour
 {
+    private RectTransform rect;
     private bool bHeld = false;
-    private Vector2 dragOffset;
+    public Vector2 dragOffset;
     private Vector2 startPosition;
     private Vector2 endPosition;
+    public Vector2 mousePos;
     private float returnTime = 0.0f;
 
     [SerializeField] private float clickMargin = 0.0f;
@@ -16,11 +18,13 @@ public class Draggable : MonoBehaviour
     {
         //replace when it feels right
         SetStartPosition(gameObject.transform.position);
+
+        rect = GetComponent<RectTransform>();
     }
 
     Vector2 GetSize()
     {
-        return GetComponent<RectTransform>().sizeDelta;
+        return rect.sizeDelta;
     }
 
     public void SetStartPosition(Vector2 pos)
@@ -33,34 +37,29 @@ public class Draggable : MonoBehaviour
         endPosition = pos;
     }
 
-    public void Hold()
+    public void Hold(Vector2 mousePosition)
     {
-        Player.instance.SetIsHolding(true);
-        Player.instance.SetHeldObject(this);
         bHeld = true;
-        dragOffset = (Vector2)gameObject.transform.position - GetMousePosition();
+        dragOffset = (Vector2)gameObject.transform.position - mousePosition;
     }
 
-    void Drop()
+    public void Drop(bool beingPlaced = false)
     {
-        Player.instance.SetIsHolding(false);
         bHeld = false;
-        SetEndPosition(gameObject.transform.position);
-        returnTime = 0.0f;
+        if (!beingPlaced)
+        {
+            SetEndPosition(gameObject.transform.position);
+            returnTime = 0.0f;
+        }
     }
 
-    Vector2 GetMousePosition()
-    {
-        return Mouse.current.position.ReadValue();
-    }
-
-    bool InBoundingBox(Vector2 pos)
+    public bool InBoundingBox(Vector2 pos)
     {
         bool value = false;
         Vector2 position = gameObject.transform.position;
         Vector2 size = GetSize();
-        if (pos.x < position.x + (size.x / 2) + clickMargin && pos.x > position.x - (size.x / 2) - clickMargin &&
-            pos.y < position.y + (size.y / 2) + clickMargin && pos.y > position.y - (size.y / 2) - clickMargin)
+        if (pos.x < position.x + (size.x * (1 - rect.pivot.x)) + clickMargin && pos.x > position.x - (size.x * rect.pivot.x) - clickMargin &&
+            pos.y < position.y + (size.y * (1 - rect.pivot.y)) + clickMargin && pos.y > position.y - (size.y * rect.pivot.y) - clickMargin)
         {
             value = true;
         }
@@ -69,20 +68,9 @@ public class Draggable : MonoBehaviour
 
     public void Update()
     {
-        if (!bHeld)
-        {
-            if (Mouse.current.leftButton.wasPressedThisFrame && InBoundingBox(GetMousePosition()))
-            {
-                Hold();
-            }
-        }
         if (bHeld)
         {
-            gameObject.transform.position = GetMousePosition() + dragOffset;
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
-            {
-                Drop();
-            }
+            gameObject.transform.position = mousePos + dragOffset;
         }
 
         if (returnTime >= 0.0f && returnTime <= 1.0f && !bHeld)
@@ -93,11 +81,5 @@ public class Draggable : MonoBehaviour
             gameObject.transform.position = Vector2.Lerp(endPosition, startPosition, returnTime);
             returnTime += Time.deltaTime * progress * returnSpeed;
         }
-    }
-
-    public void OnDestroy()
-    {
-        Player.instance.SetIsHolding(false);
-        bHeld = false;
     }
 }
