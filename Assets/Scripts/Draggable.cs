@@ -9,7 +9,7 @@ public class Draggable : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 endPosition;
     public Vector2 mousePos;
-    private float returnTime = 0.0f;
+    private float returnTime = -1.0f;
 
     [SerializeField] private float clickMargin = 0.0f;
     [SerializeField] private float returnSpeed = 1.0f;
@@ -41,6 +41,7 @@ public class Draggable : MonoBehaviour
     {
         bHeld = true;
         dragOffset = (Vector2)gameObject.transform.position - mousePosition;
+        returnTime = -1.0f;
     }
 
     public void Drop(bool beingPlaced = false)

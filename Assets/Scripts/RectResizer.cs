@@ -38,7 +38,7 @@ public class RectResizer : MonoBehaviour
         }
     }
 
-    void ResizeRect()
+    public void ResizeRect()
     {
         float margin = text.alignment == TextAlignmentOptions.Center ? marginSize : marginSize / 2;
         float size = text.preferredWidth + margin;

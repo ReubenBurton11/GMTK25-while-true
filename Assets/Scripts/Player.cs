@@ -27,13 +27,8 @@ public class Player : MonoBehaviour
     {
         mousePos = Mouse.current.position.ReadValue();
 
-        for (int i = 0; i < draggables.Length; i++)
-        {
-            Debug.Log(draggables[i].InBoundingBox(mousePos).ToString());
-        }
-
-                //Input: Left Click
-                if (Mouse.current.leftButton.wasPressedThisFrame)
+        //Input: Left Click
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {          
             if (draggables.Length > 0)
             {
@@ -43,7 +38,7 @@ public class Player : MonoBehaviour
                     {
                         HeldObject = draggables[i];
                         SetIsHolding(true);
-                        Placer placer;
+                        Placer placer;                  
                         if (placer = HeldObject.GetComponent<Placer>())
                         {
                             if (placer.bPlaced)
