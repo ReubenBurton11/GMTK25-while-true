@@ -23,7 +23,7 @@ public class Placer : MonoBehaviour
     {
         bPlaced = true;
         rect.pivot = new Vector2(0, 0.5f);
-        //image.enabled = false;
+        image.enabled = false;
         text.alignment = TextAlignmentOptions.Left;
         textValue = text.text;
         text.text = "    " + textValue;

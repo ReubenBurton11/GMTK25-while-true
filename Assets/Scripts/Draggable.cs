@@ -17,7 +17,7 @@ public class Draggable : MonoBehaviour
     private void Start()
     {
         //replace when it feels right
-        SetStartPosition(gameObject.transform.position);
+        //SetStartPosition(gameObject.transform.position);
 
         rect = GetComponent<RectTransform>();
     }
@@ -41,6 +41,7 @@ public class Draggable : MonoBehaviour
     {
         bHeld = true;
         dragOffset = (Vector2)gameObject.transform.position - mousePosition;
+        gameObject.transform.SetAsLastSibling();
         returnTime = -1.0f;
     }
 

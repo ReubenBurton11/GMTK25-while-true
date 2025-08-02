@@ -9,7 +9,9 @@ public class Player : MonoBehaviour
     private bool bHolding;
     private Draggable HeldObject;
     [SerializeField] private Draggable[] draggables;
-    [SerializeField] private DropArea[] dropAreas;
+    public DropArea[] dropAreas;
+
+    private LineManager lineManager;
 
     private void Awake()
     {
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
                             if (placer.bPlaced)
                             {
                                 placer.Displace();
+                                lineManager.RemoveLine(HeldObject);
                             }
                         }
                         HeldObject.Hold(mousePos);
@@ -63,15 +66,17 @@ public class Player : MonoBehaviour
                 bool placed = false;
                 if (placer = HeldObject.GetComponent<Placer>())
                 {
-                    for (int i = 0; i < dropAreas.Length; i++)
+                    int line = lineManager == null ? 0 : lineManager.line;
+                    if (dropAreas[line].InBoundingBox(mousePos))
                     {
-                        if (dropAreas[i].InBoundingBox(mousePos))
+                        HeldObject.Drop(true);
+                        placer.Place(dropAreas[line].gameObject.transform.position);
+                        placed = true;
+                        if (lineManager == null)
                         {
-                            HeldObject.Drop(true);
-                            placer.Place(dropAreas[i].gameObject.transform.position);
-                            placed = true;
-                            break;
+                            lineManager = FindFirstObjectByType<LineManager>();
                         }
+                        lineManager.AddLine(HeldObject);
                     }
                 }
                 if (!placed)
