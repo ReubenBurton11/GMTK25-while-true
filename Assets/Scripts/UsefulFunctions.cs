@@ -15,9 +15,15 @@ public static class UsefulFunctions
 
     public static void Append<T>(ref T[] arr, T item)
     {
-        Array.Resize(ref arr, arr.Length + 1);
+        if (arr == null)
+        {
+            arr = new T[1] { item };
+        }
+        else
+        {
+            Array.Resize(ref arr, arr.Length + 1);
 
-
-        arr[arr.Length - 1] = item;
+            arr[arr.Length - 1] = item;
+        }
     }
 }

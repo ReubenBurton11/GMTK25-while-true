@@ -1,7 +1,9 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DraggableSpawner : MonoBehaviour
 {
+    [SerializeField] private EFunctionType[] funcsToSpawn;
     public int numOfDrags;
     private RectTransform rect;
     [SerializeField] private GameObject draggablePrefab;
@@ -9,6 +11,7 @@ public class DraggableSpawner : MonoBehaviour
 
     private void Start()
     {
+        numOfDrags = funcsToSpawn.Length;
         Spawn();
     }
 
@@ -37,6 +40,8 @@ public class DraggableSpawner : MonoBehaviour
             draggable.transform.position = pos;
             drags[i] = draggable.GetComponent<Draggable>();
             drags[i].SetStartPosition(pos);
+            Function currentFunc = FunctionDict.GetFunction(funcsToSpawn[i]);
+            draggable.AddComponent(currentFunc.GetType());
         }
 
         Player.instance.SetDraggables(drags);

@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private Vector2 mousePos;
     private bool bHolding;
     private Draggable HeldObject;
-    private Draggable[] draggables;
+    [SerializeField] private Draggable[] draggables;
     [HideInInspector] public DropArea[] dropAreas;
 
     private LineManager lineManager;
@@ -29,22 +29,19 @@ public class Player : MonoBehaviour
     private void Start()
     {
         dropAreas = FindObjectsByType<DropArea>(FindObjectsSortMode.None);
-        for (int i = 0; i < dropAreas.Length; i++)
+        bool sorted = false;
+        while (!sorted)
         {
-            if (i != dropAreas[i].orderNum)
+            sorted = true;
+            for (int i = 0; i < dropAreas.Length; i++)
             {
-                DropArea drop = dropAreas[i];
-                dropAreas[i] = dropAreas[drop.orderNum];
-                dropAreas[drop.orderNum] = drop;
-            }
-        }
-        for (int i = 0; i < dropAreas.Length; i++)
-        {
-            if (i != dropAreas[i].orderNum)
-            {
-                DropArea drop = dropAreas[i];
-                dropAreas[i] = dropAreas[drop.orderNum];
-                dropAreas[drop.orderNum] = drop;
+                if (i != dropAreas[i].orderNum)
+                {
+                    DropArea drop = dropAreas[i];
+                    dropAreas[i] = dropAreas[drop.orderNum];
+                    dropAreas[drop.orderNum] = drop;
+                    sorted = false;
+                }
             }
         }
     }

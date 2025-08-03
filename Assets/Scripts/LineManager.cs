@@ -9,14 +9,19 @@ public class LineManager : MonoBehaviour
     private TMP_Text text;
     public int line = 0;
     private Draggable[] storedDraggables;
+    private WhileLoop whileLoop;
 
     private void Start()
     {
-        text = GetComponent<TMP_Text>();
+        text = GetComponentInChildren<TMP_Text>();
     }
 
     public void AddLine(Draggable draggable)
     {
+        if (whileLoop == null)
+        {
+            whileLoop = GetComponent<WhileLoop>();
+        }
         string textValue = text.text;
         textValue = textValue.Remove(16 + line);
         text.text = textValue + "\n};";
@@ -28,6 +33,7 @@ public class LineManager : MonoBehaviour
         {
             storedDraggables = new Draggable[1] { draggable };
         }
+        whileLoop.AddFunction(draggable.GetComponent<Function>());
         line++;
     }
 
@@ -42,6 +48,7 @@ public class LineManager : MonoBehaviour
         {
             storedDraggables[i].gameObject.transform.position = Player.instance.dropAreas[i].transform.position;
         }
+        whileLoop.RemoveFunction(draggable.GetComponent<Function>());
         line--;
     }
 }
