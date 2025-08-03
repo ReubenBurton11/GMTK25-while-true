@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class DropArea : MonoBehaviour
 {
     private RectTransform rect;
+    public int orderNum;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -14,22 +14,31 @@ public class DraggableSpawner : MonoBehaviour
 
     void Spawn()
     {
+        if (rect == null)
+        {
+            rect = GetComponent<RectTransform>();
+        }
         int cols = numOfDrags < dragsPerRow ? numOfDrags : dragsPerRow;
         float rows = Mathf.Ceil(numOfDrags / dragsPerRow);
-        Debug.Log(rows.ToString());
+        float xSection = ((rect.anchorMax.x - rect.anchorMin.x) * 1920) / cols;
+        float ySection = ((rect.anchorMax.y - rect.anchorMin.y) * 1080) / (rows + 1);
+
+        Draggable[] drags = new Draggable[numOfDrags];
         for (int i = 0; i < numOfDrags; i++)
         {
-            if (rect == null)
+            Vector2 pos;
+            if (Mathf.Ceil(i / dragsPerRow) >= rows)
             {
-                rect = GetComponent<RectTransform>();
+                cols = numOfDrags % dragsPerRow;
+                xSection = ((rect.anchorMax.x - rect.anchorMin.x) * 1920) / cols;
             }
-            float xSection = ((rect.anchorMax.x - rect.anchorMin.x) * 1920) / cols;
-            float ySection = ((rect.anchorMax.y - rect.anchorMin.y) * 1080) / (rows + 1);
-            Vector2 pos = new Vector2((xSection * ((i % dragsPerRow) + 1)) - (xSection / 2), (ySection * Mathf.Ceil(i / dragsPerRow)) + (ySection / 2));
+            pos = new Vector2((xSection * ((i % dragsPerRow) + 1)) - (xSection / 2), (ySection * (rows + 1)) - (ySection * Mathf.Ceil(i / dragsPerRow)) - (ySection / 2));
             GameObject draggable = Instantiate(draggablePrefab, gameObject.transform);
-            Debug.Log(pos.ToString());
             draggable.transform.position = pos;
-            draggable.GetComponent<Draggable>().SetStartPosition(pos);
+            drags[i] = draggable.GetComponent<Draggable>();
+            drags[i].SetStartPosition(pos);
         }
+
+        Player.instance.SetDraggables(drags);
     }
 }

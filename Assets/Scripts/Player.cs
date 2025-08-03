@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,8 +9,8 @@ public class Player : MonoBehaviour
     private Vector2 mousePos;
     private bool bHolding;
     private Draggable HeldObject;
-    [SerializeField] private Draggable[] draggables;
-    public DropArea[] dropAreas;
+    private Draggable[] draggables;
+    [HideInInspector] public DropArea[] dropAreas;
 
     private LineManager lineManager;
 
@@ -22,6 +23,29 @@ public class Player : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        dropAreas = FindObjectsByType<DropArea>(FindObjectsSortMode.None);
+        for (int i = 0; i < dropAreas.Length; i++)
+        {
+            if (i != dropAreas[i].orderNum)
+            {
+                DropArea drop = dropAreas[i];
+                dropAreas[i] = dropAreas[drop.orderNum];
+                dropAreas[drop.orderNum] = drop;
+            }
+        }
+        for (int i = 0; i < dropAreas.Length; i++)
+        {
+            if (i != dropAreas[i].orderNum)
+            {
+                DropArea drop = dropAreas[i];
+                dropAreas[i] = dropAreas[drop.orderNum];
+                dropAreas[drop.orderNum] = drop;
+            }
         }
     }
 
@@ -95,7 +119,7 @@ public class Player : MonoBehaviour
 
     public void ClearDraggables()
     {
-        draggables = new Draggable[0];
+        Array.Clear(draggables,0, draggables.Length);
     }
 
     public void SetIsHolding(bool value)
@@ -106,6 +130,11 @@ public class Player : MonoBehaviour
     public bool GetIsHolding()
     {
         return bHolding;
+    }
+
+    public void SetDraggables(Draggable[] drags)
+    {
+        draggables = drags;
     }
 
     public void SetHeldObject(Draggable obj)
